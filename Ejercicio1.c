@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#define TAMA 100
 //estrucutras
 struct Tarea
 {
@@ -12,8 +13,10 @@ struct Tarea
 
 typedef struct Tarea Tareas;
 
-
-
+//FUNCIONES
+void mostrarUnaTarea(Tareas * Tarea);
+Tareas * buscarId(Tareas ** TPend, Tareas ** TRea, int ID, int cant);
+Tareas * buscarClave(Tareas ** TPend, Tareas ** TRea, char clave[], int cant);
 int main()
 {
     srand(time(NULL));
@@ -26,6 +29,7 @@ int main()
     
     //reserva de memoria del vector de puntero
     Tareas **TAREA =(struct Tarea**)malloc(sizeof(struct Tarea*)*cTarea);
+
     
     //Iicializamos el arreglo apuntado a NULL
     for (int i = 0; i < cTarea; i++)
@@ -126,7 +130,85 @@ int main()
 
     }
 
+    //busqueda de ID
+    printf("\n\nBUSCAR TAREA POR ID..........................");
+    Tareas * BUSCADO = NULL;
+    int id;
+   
+
+    printf("\nIngresar el id a buscar: ");
+
+    scanf("%d",&id);
+ 
+    BUSCADO = buscarId(TareasPendientes, TareasRealizadas, id, cTarea);
+    mostrarUnaTarea(BUSCADO);
+
+//busqueda de ID
+ Tareas * BUSCADO2 = NULL;
+ char * clave, claveBuscada[TAMA];
+  printf("\n\nBUSCAR TAREA POR CLAVE..........................");
+   printf("\nIngresar clave a buscar: ");
+  fflush(stdin);
+   gets(claveBuscada);
+    fflush(stdin);
+   clave = (char *)malloc(sizeof(char)* strlen(claveBuscada)+1);
+   strcpy(clave, claveBuscada);
+   BUSCADO2 = buscarClave(TareasPendientes, TareasRealizadas, clave, cTarea);
+    mostrarUnaTarea(BUSCADO2);
 
     return 0;
 }
 
+Tareas * buscarId(Tareas ** TPend, Tareas ** TRea, int ID, int cant)
+{
+    if (TPend != NULL && TRea != NULL)
+    {
+       for (int i = 0; i < cant; i++)
+       {
+        if (TPend[i]!=NULL && TPend[i]->TareaID== ID)
+        {
+           return TPend[i];
+        }else{
+            if (TRea[i]!=NULL && TRea[i]->TareaID==ID)
+            {
+                return TRea[i];
+            }
+            
+        }
+        
+       }
+       
+    }
+    return(NULL);
+}
+
+Tareas * buscarClave(Tareas ** TPend, Tareas ** TRea, char clave[], int cant){
+    if (TPend!= NULL && TRea!=NULL)
+    {
+        for (int i = 0; i < cant; i++)
+        {
+            if (TPend[i] != NULL && strstr(TPend[i]->Descripcion,clave)!= NULL)
+            {
+                return TPend[i];
+            }else{
+                if (TRea[i]!= NULL && strstr(TRea[i]->Descripcion, clave)!=NULL)
+                {
+                   return TRea[i];
+                }
+                
+            }
+            
+        }
+        
+    }
+    return NULL;
+}
+
+void mostrarUnaTarea(Tareas * Tarea){
+    printf("\n-------------TAREA N%d-------------", Tarea->TareaID);
+        printf("\nID: %d", Tarea->TareaID);
+        printf("\nDescripcion: ");
+        puts(Tarea->Descripcion);
+        printf("Duracion: %d", Tarea->Duracion);
+
+}
