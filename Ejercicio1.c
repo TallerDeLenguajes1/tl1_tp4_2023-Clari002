@@ -156,6 +156,15 @@ int main()
    BUSCADO2 = buscarClave(TareasPendientes, TareasRealizadas, clave, cTarea);
     mostrarUnaTarea(BUSCADO2);
 
+    free(clave);
+
+    for (int i = 0; i < cTarea; i++)
+    {
+        free(TAREA[i]->Descripcion);
+        free(TAREA[i]);
+    }
+    
+
     return 0;
 }
 
