@@ -26,8 +26,7 @@ void mostrarLista(Nodo * Lista);
 //funcion buscar
 Nodo * buscarTareaPorId(Nodo * TodasLasTareas, Nodo * TareasPendientes, Nodo * TareasRealizadas,int  idBuscado);
 Nodo * buscarTareaPorClave(Nodo * TodasLasTareas,Nodo * TareasPendientes, Nodo * TareasRealizadas, char clave[]);
-//funcion borrar
-void  borrarTareaPorId(Nodo * TodasLasTareas, Nodo * TareasPendientes, Nodo * TareasRealizadas,int  idBuscado);
+
 int main()
 {
     Nodo * TodasTareas = NULL;
