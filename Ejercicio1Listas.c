@@ -27,6 +27,7 @@ void mostrarLista(Nodo * Lista);
 Nodo * buscarTareaPorId(Nodo * TodasLasTareas, Nodo * TareasPendientes, Nodo * TareasRealizadas,int  idBuscado);
 Nodo * buscarTareaPorClave(Nodo * TodasLasTareas,Nodo * TareasPendientes, Nodo * TareasRealizadas, char clave[]);
 
+
 int main()
 {
     Nodo * TodasTareas = NULL;
@@ -103,8 +104,10 @@ int main()
         break;
     case 3:
     printf("\n\n-----------TAREAS PENDIENTES-------------------");
-
+    
         mostrarLista(TareasPendientes);
+
+        
         break;
     case 4:
     printf("\n\n-----------TAREAS REALIZADAS-------------------");
