@@ -26,7 +26,9 @@ void mostrarLista(Nodo * Lista);
 //funcion buscar
 Nodo * buscarTareaPorId(Nodo * TodasLasTareas, Nodo * TareasPendientes, Nodo * TareasRealizadas,int  idBuscado);
 Nodo * buscarTareaPorClave(Nodo * TodasLasTareas,Nodo * TareasPendientes, Nodo * TareasRealizadas, char clave[]);
-
+//funcion borrar
+void  borrarTareaPorId(int idBuscado, Nodo ** TodasLasTareas, Nodo ** TareasPendientes, Nodo ** TareasRealizadas);
+void  borrarTareaPorClave(char clave[], Nodo ** TodasLasTareas, Nodo ** TareasPendientes, Nodo ** TareasRealizadas);
 
 int main()
 {
@@ -49,6 +51,8 @@ int main()
         printf("\n(4)Mostrar las Tareas Realizadas");
         printf("\n(5)Buscar una tarea por ID");
         printf("\n(6)Buscar una tarea por Clave");
+        printf("\n(7)Borrar una tarea por ID");
+        printf("\n(8)Borrar una tarea por Clave");
         printf("\n(0)Salir");
         printf("\nInsertar valor: ");
         scanf("%d", &resp);
@@ -135,7 +139,7 @@ int main()
     case 6:
     
     printf("\n\n-----------BUSCAR TAREA POR CLAVE-------------------");
-     char * clave, claveBuscada[TAMA];
+    char * clave, claveBuscada[TAMA];
     Nodo * Buscado2 = NULL;
 
      printf("\nIngresar clave a buscar: ");
@@ -154,7 +158,28 @@ int main()
 
     free(clave);
         break;
-  
+    case 7:
+    printf("\n\n-----------BORRAR TAREA POR ID-------------------");
+    int idB;
+    printf("\nIngresar el id a borrar: ");
+    scanf("%d",&idB);
+    borrarTareaPorId(idB, &TodasTareas, &TareasPendientes, &TareasRealizadas);
+    
+    case 8:
+    printf("\n\n-----------BORRAR TAREA POR CLAVE-------------------");
+    char * clave2, claveBuscada2[TAMA];
+    
+     printf("\nIngresar clave a borrar: ");
+    fflush(stdin);
+    gets(claveBuscada2);
+    fflush(stdin);
+    clave2 = (char *)malloc(sizeof(char)* strlen(claveBuscada2)+1);
+    strcpy(clave2, claveBuscada2);
+    borrarTareaPorClave(clave2, &TodasTareas, &TareasPendientes, &TareasRealizadas);
+    break;
+   
+
+    break;
     default:
         break;
     }
@@ -354,4 +379,188 @@ Nodo * Buscado=NULL;
 return(NULL);
 }
 
+void  borrarTareaPorId(int idBuscado, Nodo ** TodasLasTareas, Nodo ** TareasPendientes, Nodo ** TareasRealizadas){
+    Nodo * seg;
+    Nodo * ante;
+   
+    if ((*TodasLasTareas)!=NULL)
+    {
+       
+        if ((*TodasLasTareas)->T.TareaID==idBuscado)
+        {
+           Nodo * aux = (*TodasLasTareas);
+           (*TodasLasTareas)=(*TodasLasTareas)->siguiente;
+           aux->siguiente=NULL;
+           free(aux);
+        }else{
+            seg = (*TodasLasTareas);
+            while (seg != NULL)
+            {
+                if (seg->T.TareaID!=idBuscado)
+                {
+                        ante = seg;
+                     seg= seg->siguiente;
+                 }else{
+                
+                     ante->siguiente= seg->siguiente;
+                     seg->siguiente=NULL;
+                     free(seg);
+                }
+            
+            }
+        
+        }
+         
+    }
+     if ((*TareasPendientes)!=NULL)
+    {
+       
+        if ((*TareasPendientes)->T.TareaID==idBuscado)
+        {
+           Nodo * aux = (*TareasPendientes);
+           (*TareasPendientes)=(*TareasPendientes)->siguiente;
+           aux->siguiente=NULL;
+           free(aux);
+        }else{
+            seg = (*TareasPendientes);
+            while (seg != NULL)
+            {
+                if (seg->T.TareaID!=idBuscado)
+                {
+                        ante = seg;
+                     seg= seg->siguiente;
+                 }else{
+                
+                     ante->siguiente= seg->siguiente;
+                     seg->siguiente=NULL;
+                     free(seg);
+                }
+            
+            }
+        
+        }
+         
+    }
+     if ((*TareasRealizadas)!=NULL)
+    {
+       
+        if ((*TareasRealizadas)->T.TareaID==idBuscado)
+        {
+           Nodo * aux = (*TareasRealizadas);
+           (*TareasRealizadas)=(*TareasRealizadas)->siguiente;
+           aux->siguiente=NULL;
+           free(aux);
+        }else{
+            seg = (*TareasRealizadas);
+            while (seg != NULL)
+            {
+                if (seg->T.TareaID!=idBuscado)
+                {
+                        ante = seg;
+                     seg= seg->siguiente;
+                 }else{
+                
+                     ante->siguiente= seg->siguiente;
+                     seg->siguiente=NULL;
+                     free(seg);
+                }
+            
+            }
+        
+        }
+         
+    }
 
+    
+}
+
+void  borrarTareaPorClave(char clave[], Nodo ** TodasLasTareas, Nodo ** TareasPendientes, Nodo ** TareasRealizadas){
+ Nodo * seg;
+Nodo * ante;
+   
+    if ((*TodasLasTareas)!=NULL)
+    {
+       
+        if (strcmp(clave, (*TodasLasTareas)->T.Descripcion)==0)
+        {
+           Nodo * aux = (*TodasLasTareas);
+           (*TodasLasTareas)=(*TodasLasTareas)->siguiente;
+           aux->siguiente=NULL;
+           free(aux);
+        }else{
+            seg = (*TodasLasTareas);
+            while (seg != NULL)
+            {
+                if (strcmp(clave,seg->T.Descripcion)!=0)
+                {
+                        ante = seg;
+                     seg= seg->siguiente;
+                 }else{
+                     ante->siguiente= seg->siguiente;
+                     seg->siguiente=NULL;
+                     free(seg);
+                }
+            
+            }
+        
+        }
+         
+    }
+    if ((*TareasPendientes)!=NULL)
+    {
+       
+        if (strcmp(clave, (*TareasPendientes)->T.Descripcion)==0)
+        {
+           Nodo * aux = (*TareasPendientes);
+           (*TareasPendientes)=(*TareasPendientes)->siguiente;
+           aux->siguiente=NULL;
+           free(aux);
+        }else{
+            seg = (*TareasPendientes);
+            while (seg != NULL)
+            {
+                if (strcmp(clave,seg->T.Descripcion)!=0)
+                {
+                        ante = seg;
+                     seg= seg->siguiente;
+                 }else{
+                     ante->siguiente= seg->siguiente;
+                     seg->siguiente=NULL;
+                     free(seg);
+                }
+            
+            }
+        
+        }
+         
+    }
+    if ((*TareasRealizadas)!=NULL)
+    {
+       
+        if (strcmp(clave, (*TareasRealizadas)->T.Descripcion)==0)
+        {
+           Nodo * aux = (*TareasRealizadas);
+           (*TareasRealizadas)=(*TareasRealizadas)->siguiente;
+           aux->siguiente=NULL;
+           free(aux);
+        }else{
+            seg = (*TareasRealizadas);
+            while (seg != NULL)
+            {
+                if (strcmp(clave,seg->T.Descripcion)!=0)
+                {
+                        ante = seg;
+                     seg= seg->siguiente;
+                 }else{
+                     ante->siguiente= seg->siguiente;
+                     seg->siguiente=NULL;
+                     free(seg);
+                }
+            
+            }
+        
+        }
+         
+    }
+
+}
